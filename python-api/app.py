@@ -6,10 +6,14 @@ from markupsafe import escape
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+error_message = {'error': 'You must request an integer between 1 and 100 or /ready '}
 
 @app.route('/<int:given_value>', methods=['GET'])
 def home(given_value):
     generated_string = ''
+
+    if (100 > given_value < 1) or (given_value > 100):
+        return jsonify(error_message)
 
     # Checking the division rules
     if given_value % 3 == 0:
@@ -45,6 +49,6 @@ def healthcheck():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return 'You must request an integer or "/ready"'
+    return jsonify(error_message)
 
 app.run()

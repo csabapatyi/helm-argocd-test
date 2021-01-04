@@ -1,5 +1,6 @@
 import json
 
+error_message = '{\n  "error": "You must request an integer between 1 and 100 or /ready "\n}\n'
 
 def test_healthcheck(app, client):
     res = client.get('/ready')
@@ -96,4 +97,14 @@ def test_home_with_special_number_33(app, client):
 def test_not_valid_input(app, client):
     res = client.get('/randomwrongstring')
     assert res.status_code == 200
-    assert res.get_data(as_text=True) == 'You must request an integer or "/ready"'
+    assert res.get_data(as_text=True) == error_message
+
+def test_0(app, client):
+    res = client.get('/0')
+    assert res.status_code == 200
+    assert res.get_data(as_text=True) == error_message
+
+def test_101(app, client):
+    res = client.get('/101')
+    assert res.status_code == 200
+    assert res.get_data(as_text=True) == error_message
