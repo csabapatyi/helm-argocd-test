@@ -1,18 +1,19 @@
-# Dockerfile based on this site: https://runnable.com/docker/python/dockerize-your-flask-application
-FROM python:3.6-alpine
+FROM python:3.6-slim
 
 LABEL maintainer="csaba@cloudsolutionarchitect.net"
 
-RUN mkdir -p /app/
+COPY . /srv/flask_app
+WORKDIR /srv/flask_app
 
-COPY ./requirements.txt /app/requirements.txt
+RUN apt-get clean \
+    && apt-get -y update
 
-WORKDIR /app
+RUN apt-get -y install nginx \
+    && apt-get -y install python3-dev \
+    && apt-get -y install build-essential
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --src /usr/local/src
 
-COPY app.py /app
-
-ENTRYPOINT [ "python3" ]
-
-CMD [ "app.py" ]
+COPY nginx.conf /etc/nginx
+RUN chmod +x ./start.sh
+CMD ["./start.sh"]

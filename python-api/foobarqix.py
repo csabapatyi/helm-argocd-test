@@ -51,4 +51,5 @@ def healthcheck():
 def page_not_found(error):
     return jsonify(error_message)
 
-app.run()
+if __name__ == '__main__':
+    app.run()
