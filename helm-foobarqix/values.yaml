@@ -42,7 +42,7 @@ securityContext: {}
 
 service:
   name: foobarqix-service
-  type: NodePort
+  type: ClusterIP
   port: 8000
   
 
