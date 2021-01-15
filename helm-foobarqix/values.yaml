@@ -42,18 +42,25 @@ securityContext: {}
 
 service:
   name: foobarqix-service
-  type: LoadBalancer
+  type: NodePort
   port: 8000
   
 
 ingress:
-  enabled: false
+  enabled: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
-      paths: []
+    - host: foobarqix.local
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: foobarqix-service
+              port:
+                8000
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
