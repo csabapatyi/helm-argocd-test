@@ -42,9 +42,8 @@ securityContext: {}
 
 service:
   name: foobarqix-service
-  type: ClusterIP
+  type: NodePort
   port: 8000
-  
 
 ingress:
   enabled: true
@@ -90,3 +89,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+livenessProbe:
+  httpGet:
+    path: /ready
+    port: http
+  initialDelaySeconds: 5

@@ -5,7 +5,7 @@ HELM_DEPLOYMENT_NAME=helm-foobarqix
 echo "##### Starting minikube tunnel in the background if it is not running #####"
 MINIKUBE_TUNNEL_CHECK=$(ps -ef | grep -o "[m]inikube tunnel")
 if [[ "$MINIKUBE_TUNNEL_CHECK" != "minikube tunnel" ]] ; then
-    minikube tunnel &
+    nohup minikube tunnel &
     sleep 5
 fi
 

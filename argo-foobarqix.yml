@@ -1,0 +1,20 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures."
+
+destination:
+  namespace: default
+  server: https://kubernetes.default.svc
+project: default
+source:
+  helm:
+    valueFiles:
+    - values.yaml
+  path: helm-foobarqix
+  repoURL: https://github.com/itoperatorguy/helm-argocd-test
+  targetRevision: HEAD
+syncPolicy:
+  automated:
+    prune: true
+  syncOptions:
+  - Validate=false
